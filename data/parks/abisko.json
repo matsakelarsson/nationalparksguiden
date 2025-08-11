@@ -149,6 +149,11 @@
         "distance_km": 3,
         "duration_hours": 1.5,
         "elevation_gain": 50,
+        "starting_point": "Abisko Turiststation (main visitor center)",
+        "starting_coordinates": {
+          "lat": 68.3500,
+          "lng": 18.8333
+        },
         "description": "A gentle walk through the beautiful Abisko Valley, perfect for families and beginners. The trail follows the Abisko River and offers great views of the surrounding mountains.",
         "highlights": ["River views", "Mountain scenery", "Wildflowers in summer", "Easy access"]
       },
@@ -157,6 +162,11 @@
         "distance_km": 2,
         "duration_hours": 1,
         "elevation_gain": 20,
+        "starting_point": "Abisko Turiststation parking area",
+        "starting_coordinates": {
+          "lat": 68.3500,
+          "lng": 18.8333
+        },
         "description": "A peaceful walk along the shore of Sweden's sixth-largest lake. Great for bird watching and enjoying the vast lake views.",
         "highlights": ["Lake views", "Bird watching", "Peaceful atmosphere", "Wheelchair accessible"]
       }
@@ -167,6 +177,11 @@
         "distance_km": 8,
         "duration_hours": 4,
         "elevation_gain": 400,
+        "starting_point": "Abisko Turiststation, follow signs to Nuolja",
+        "starting_coordinates": {
+          "lat": 68.3500,
+          "lng": 18.8333
+        },
         "description": "A rewarding hike up Nuolja Mountain offering spectacular views over Lake Torneträsk and the surrounding mountains. The trail is well-marked and suitable for most hikers.",
         "highlights": ["Panoramic views", "Mountain summit", "Wildlife", "Well-marked trail"]
       },
@@ -175,6 +190,11 @@
         "distance_km": 6,
         "duration_hours": 3,
         "elevation_gain": 200,
+        "starting_point": "Abisko Östra entrance (eastern side of park)",
+        "starting_coordinates": {
+          "lat": 68.3550,
+          "lng": 18.8500
+        },
         "description": "A beautiful valley walk that takes you through birch forests and offers great views of the surrounding mountains. Perfect for a half-day hike.",
         "highlights": ["Forest trails", "Valley views", "Wildflowers", "Peaceful atmosphere"]
       }
@@ -185,6 +205,11 @@
         "distance_km": 15,
         "duration_hours": 6,
         "elevation_gain": 600,
+        "starting_point": "Abisko Turiststation, follow Kungsleden trail markers",
+        "starting_coordinates": {
+          "lat": 68.3500,
+          "lng": 18.8333
+        },
         "description": "The first section of the famous Kungsleden trail, taking you through varied terrain with stunning mountain views. This is a full-day hike requiring good fitness.",
         "highlights": ["Kungsleden experience", "Mountain views", "Varied terrain", "Wilderness feeling"]
       }
