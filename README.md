@@ -1,5 +1,7 @@
 # Swedish National Park Guide PDF Generator
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A simple web application that generates personalized PDF guides for visiting Swedish national parks based on user preferences.
 
 ## Features
@@ -71,4 +73,12 @@ The application can be easily customized by:
 
 ## License
 
-This project is open source and available under the MIT License.
+This project is open source and available under the [MIT License](LICENSE).
+
+The MIT License is a permissive license that allows others to:
+- Use your code commercially
+- Modify and distribute your code
+- Use it privately
+- Sublicense your code
+
+The only requirement is that the license and copyright notice are included in all copies.
