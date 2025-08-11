@@ -1,0 +1,431 @@
+{
+  "id": "abisko",
+  "name": "Abisko National Park",
+  "name_sv": "Abisko Nationalpark",
+  "location": {
+    "region": "Norrbotten",
+    "province": "Lappland",
+    "coordinates": {
+      "lat": 68.3500,
+      "lng": 18.8333
+    },
+    "nearest_cities": [
+      {
+        "name": "Kiruna",
+        "distance_km": 95,
+        "transport_time": "1h 15m by car"
+      },
+      {
+        "name": "Narvik (Norway)",
+        "distance_km": 120,
+        "transport_time": "1h 45m by car"
+      }
+    ]
+  },
+  "overview": {
+    "description": "Abisko National Park is located in the northernmost part of Sweden, above the Arctic Circle. It's famous for its dramatic mountain landscapes, pristine wilderness, and the iconic Kungsleden trail. The park offers everything from gentle valley walks to challenging mountain hikes, with stunning views of Lake Torneträsk and the surrounding mountains.",
+    "highlights": [
+      "Iconic Kungsleden trail starting point",
+      "Stunning views of Lake Torneträsk",
+      "Arctic wilderness experience",
+      "Northern Lights viewing opportunities",
+      "Midnight sun in summer",
+      "Rich Sami cultural heritage"
+    ],
+    "size_km2": 77,
+    "established": 1909,
+    "elevation": {
+      "min": 341,
+      "max": 1191,
+      "unit": "meters"
+    }
+  },
+  "seasons": {
+    "spring": {
+      "months": ["March", "April", "May"],
+      "description": "Spring arrives late in Abisko, with snow often lingering until May. This is a magical time when the landscape transforms from winter white to spring green. The melting snow creates rushing streams and waterfalls, and the first flowers begin to appear.",
+      "weather": {
+        "temperature": {
+          "min": -5,
+          "max": 15,
+          "unit": "°C"
+        },
+        "conditions": ["Melting snow", "Variable weather", "Longer days", "Spring flowers"]
+      },
+      "activities": [
+        "Late-season skiing",
+        "Spring hiking on lower trails",
+        "Bird watching",
+        "Photography of melting snow"
+      ],
+      "packing_tips": [
+        "Waterproof boots for melting snow",
+        "Layered clothing for variable temperatures",
+        "Sunglasses for bright snow",
+        "Trekking poles for stability"
+      ]
+    },
+    "summer": {
+      "months": ["June", "July", "August"],
+      "description": "Summer in Abisko brings the midnight sun, with 24-hour daylight in June and July. This is peak hiking season with warm temperatures, blooming wildflowers, and accessible high mountain trails. The park is busiest during this period.",
+      "weather": {
+        "temperature": {
+          "min": 8,
+          "max": 22,
+          "unit": "°C"
+        },
+        "conditions": ["Midnight sun", "Warm days", "Cool nights", "Occasional rain"]
+      },
+      "activities": [
+        "Hiking on all trails",
+        "Mountain climbing",
+        "Wildlife watching",
+        "Swimming in mountain lakes",
+        "Photography in 24-hour light"
+      ],
+      "packing_tips": [
+        "Lightweight hiking gear",
+        "Sun protection (24-hour sun)",
+        "Swimming gear",
+        "Insect repellent",
+        "Water bottles"
+      ]
+    },
+    "autumn": {
+      "months": ["September", "October", "November"],
+      "description": "Autumn brings spectacular fall colors to Abisko, with golden birch forests and red mountain heath. The weather becomes more unpredictable, but the crowds thin out and the northern lights begin to appear. This is a beautiful time for photography.",
+      "weather": {
+        "temperature": {
+          "min": -2,
+          "max": 15,
+          "unit": "°C"
+        },
+        "conditions": ["Fall colors", "Shorter days", "Northern lights begin", "First snow possible"]
+      },
+      "activities": [
+        "Fall color photography",
+        "Hiking on lower trails",
+        "Northern lights viewing",
+        "Wildlife watching"
+      ],
+      "packing_tips": [
+        "Warm layers for cooler temperatures",
+        "Rain gear",
+        "Camera for fall colors",
+        "Headlamp for shorter days"
+      ]
+    },
+    "winter": {
+      "months": ["December", "January", "February"],
+      "description": "Winter transforms Abisko into a magical snow-covered wonderland. The northern lights are spectacular, and the snow creates perfect conditions for cross-country skiing and snowshoeing. This is the quietest season with the most dramatic landscapes.",
+      "weather": {
+        "temperature": {
+          "min": -25,
+          "max": 2,
+          "unit": "°C"
+        },
+        "conditions": ["Deep snow", "Northern lights", "Short days", "Cold temperatures"]
+      },
+      "activities": [
+        "Cross-country skiing",
+        "Snowshoeing",
+        "Northern lights photography",
+        "Ice fishing",
+        "Winter hiking"
+      ],
+      "packing_tips": [
+        "Extremely warm clothing",
+        "Snow boots",
+        "Headlamp",
+        "Camera for northern lights",
+        "Thermal underwear"
+      ]
+    }
+  },
+  "trails": {
+    "easy": [
+      {
+        "name": "Abisko Valley Trail",
+        "distance_km": 3,
+        "duration_hours": 1.5,
+        "elevation_gain": 50,
+        "description": "A gentle walk through the beautiful Abisko Valley, perfect for families and beginners. The trail follows the Abisko River and offers great views of the surrounding mountains.",
+        "highlights": ["River views", "Mountain scenery", "Wildflowers in summer", "Easy access"]
+      },
+      {
+        "name": "Lake Torneträsk Shore",
+        "distance_km": 2,
+        "duration_hours": 1,
+        "elevation_gain": 20,
+        "description": "A peaceful walk along the shore of Sweden's sixth-largest lake. Great for bird watching and enjoying the vast lake views.",
+        "highlights": ["Lake views", "Bird watching", "Peaceful atmosphere", "Wheelchair accessible"]
+      }
+    ],
+    "moderate": [
+      {
+        "name": "Nuolja Mountain",
+        "distance_km": 8,
+        "duration_hours": 4,
+        "elevation_gain": 400,
+        "description": "A rewarding hike up Nuolja Mountain offering spectacular views over Lake Torneträsk and the surrounding mountains. The trail is well-marked and suitable for most hikers.",
+        "highlights": ["Panoramic views", "Mountain summit", "Wildlife", "Well-marked trail"]
+      },
+      {
+        "name": "Kårsa Valley",
+        "distance_km": 6,
+        "duration_hours": 3,
+        "elevation_gain": 200,
+        "description": "A beautiful valley walk that takes you through birch forests and offers great views of the surrounding mountains. Perfect for a half-day hike.",
+        "highlights": ["Forest trails", "Valley views", "Wildflowers", "Peaceful atmosphere"]
+      }
+    ],
+    "challenging": [
+      {
+        "name": "Kungsleden Start",
+        "distance_km": 15,
+        "duration_hours": 6,
+        "elevation_gain": 600,
+        "description": "The first section of the famous Kungsleden trail, taking you through varied terrain with stunning mountain views. This is a full-day hike requiring good fitness.",
+        "highlights": ["Kungsleden experience", "Mountain views", "Varied terrain", "Wilderness feeling"]
+      }
+    ]
+  },
+  "accommodation": {
+    "within_park": [
+      {
+        "name": "Abisko Turiststation",
+        "type": "Mountain Station",
+        "description": "Historic mountain station offering comfortable accommodation, restaurant, and sauna. Perfect base for exploring the park.",
+        "facilities": ["Restaurant", "Sauna", "Equipment rental", "Guided tours", "WiFi"],
+        "booking": "STF member discount available",
+        "season": "Year-round"
+      },
+      {
+        "name": "Abisko Mountain Lodge",
+        "type": "Hotel",
+        "description": "Modern hotel with comfortable rooms and excellent restaurant. Great views of the mountains and lake.",
+        "facilities": ["Restaurant", "Bar", "Equipment rental", "Tour booking", "Free WiFi"],
+        "booking": "Direct booking or through travel agencies",
+        "season": "Year-round"
+      }
+    ],
+    "nearby": [
+      {
+        "name": "Abisko Guesthouse",
+        "type": "Guesthouse",
+        "description": "Cozy family-run guesthouse with traditional Swedish hospitality.",
+        "facilities": ["Shared kitchen", "Common areas", "Bicycle rental", "Local tips"],
+        "distance_km": 2,
+        "season": "Year-round"
+      }
+    ],
+    "camping": [
+      {
+        "name": "Abisko Camping",
+        "type": "Camping Ground",
+        "description": "Well-equipped camping ground with facilities for tents and caravans.",
+        "facilities": ["Shower facilities", "Kitchen", "Electricity", "Waste disposal"],
+        "season": "June-September",
+        "reservation": "Recommended in summer"
+      }
+    ]
+  },
+  "transportation": {
+    "by_car": {
+      "description": "Abisko is accessible by car via the E10 highway. The drive from Kiruna takes about 1 hour and 15 minutes.",
+      "parking": "Free parking available at Abisko Turiststation and visitor center",
+      "road_conditions": "Well-maintained roads, winter driving requires winter tires",
+      "winter_considerations": "Snow chains may be required in winter"
+    },
+    "by_train": {
+      "description": "Abisko has a train station served by SJ trains from Stockholm and other major cities.",
+      "frequency": "Daily trains from Stockholm (overnight journey)",
+      "duration": "Stockholm-Abisko: approximately 18 hours",
+      "cost": "From 400-800 SEK depending on class and booking time"
+    },
+    "by_bus": {
+      "description": "Local buses connect Abisko with Kiruna and other nearby towns.",
+      "frequency": "Several times daily",
+      "duration": "Kiruna-Abisko: approximately 1.5 hours",
+      "cost": "Around 80 SEK"
+    },
+    "by_plane": {
+      "description": "The nearest airport is in Kiruna (KRN), with connections to Stockholm.",
+      "airlines": "SAS and Norwegian",
+      "transfer": "Bus or taxi from Kiruna airport to Abisko",
+      "duration": "Stockholm-Kiruna: approximately 1.5 hours"
+    }
+  },
+  "entrances": [
+    {
+      "name": "Abisko Turiststation",
+      "type": "Main Entrance",
+      "description": "The main entrance and visitor center of the park, located at the historic mountain station.",
+      "facilities": ["Visitor center", "Information desk", "Maps and brochures", "Restaurant", "Equipment rental"],
+      "coordinates": {
+        "lat": 68.3500,
+        "lng": 18.8333
+      },
+      "parking": "Large free parking area",
+      "accessibility": "Wheelchair accessible"
+    },
+    {
+      "name": "Abisko Östra",
+      "type": "Eastern Entrance",
+      "description": "Alternative entrance on the eastern side of the park, less crowded than the main entrance.",
+      "facilities": ["Basic information", "Parking", "Trail access"],
+      "coordinates": {
+        "lat": 68.3550,
+        "lng": 18.8500
+      },
+      "parking": "Small parking area",
+      "accessibility": "Limited accessibility"
+    }
+  ],
+  "wildlife": {
+    "mammals": [
+      "Reindeer",
+      "Arctic fox",
+      "Moose",
+      "Wolverine",
+      "Lynx",
+      "Brown bear"
+    ],
+    "birds": [
+      "Golden eagle",
+      "Rough-legged buzzard",
+      "Ptarmigan",
+      "Snow bunting",
+      "Bluethroat",
+      "Arctic warbler"
+    ],
+    "best_viewing": {
+      "spring": "Bird migration, reindeer calving",
+      "summer": "All wildlife active, best bird watching",
+      "autumn": "Rutting season for reindeer, bird migration",
+      "winter": "Arctic fox, winter birds, tracks in snow"
+    }
+  },
+  "flora": {
+    "trees": [
+      "Mountain birch",
+      "Willow",
+      "Rowan"
+    ],
+    "flowers": [
+      "Arctic bell-heather",
+      "Mountain avens",
+      "Arctic poppy",
+      "Lapland rosebay",
+      "Cloudberry"
+    ],
+    "best_viewing": {
+      "spring": "First flowers appearing",
+      "summer": "Peak flowering season",
+      "autumn": "Fall colors, berries",
+      "winter": "Winter landscapes"
+    }
+  },
+  "safety": {
+    "general_tips": [
+      "Always check weather conditions before hiking",
+      "Carry adequate water and food",
+      "Dress in layers for variable weather",
+      "Inform someone of your hiking plans",
+      "Stay on marked trails",
+      "Respect wildlife and keep distance"
+    ],
+    "seasonal_considerations": {
+      "spring": "Beware of melting snow and slippery conditions",
+      "summer": "Protect against sunburn and insects",
+      "autumn": "Prepare for changing weather conditions",
+      "winter": "Extreme cold, limited daylight, avalanche risk"
+    },
+    "emergency": {
+      "phone": "112 (Swedish emergency number)",
+      "park_rangers": "Available at Abisko Turiststation",
+      "nearest_hospital": "Kiruna Hospital (95 km away)"
+    }
+  },
+  "regulations": {
+    "general": [
+      "Follow Allemansrätten (Right of Public Access)",
+      "No motorized vehicles on trails",
+      "No camping within 100m of buildings",
+      "Respect private property",
+      "No open fires during dry periods"
+    ],
+    "camping": [
+      "Maximum 2 nights in same location",
+      "No camping near buildings or cultivated land",
+      "Leave no trace - pack out all waste",
+      "Use designated camping areas when available"
+    ],
+    "wildlife": [
+      "Keep distance from wildlife (minimum 100m)",
+      "No feeding of animals",
+      "Respect breeding and nesting areas",
+      "Dogs must be kept on leash during bird breeding season"
+    ]
+  },
+  "local_culture": {
+    "sami_heritage": "The area has rich Sami cultural heritage with traditional reindeer herding still practiced in the region.",
+    "traditional_activities": [
+      "Reindeer herding",
+      "Traditional crafts",
+      "Sami storytelling",
+      "Traditional food preparation"
+    ],
+    "cultural_sites": [
+      "Sami cultural center in nearby Jokkmokk",
+      "Traditional Sami settlements",
+      "Historical reindeer migration routes"
+    ]
+  },
+  "photography": {
+    "best_locations": [
+      "Lake Torneträsk shoreline",
+      "Nuolja Mountain summit",
+      "Abisko Valley viewpoints",
+      "Kårsa Valley",
+      "Mountain passes"
+    ],
+    "seasonal_opportunities": {
+      "spring": "Melting snow, spring flowers, dramatic light",
+      "summer": "Midnight sun, green landscapes, wildlife",
+      "autumn": "Fall colors, golden light, northern lights begin",
+      "winter": "Snow landscapes, northern lights, winter wildlife"
+    },
+    "tips": [
+      "Use polarizing filter for lake reflections",
+      "Bring tripod for northern lights photography",
+      "Shoot during golden hour (even in summer with midnight sun)",
+      "Include people for scale in landscape shots"
+    ]
+  },
+  "practical_info": {
+    "visitor_center": {
+      "name": "Abisko Visitor Center",
+      "location": "Abisko Turiststation",
+      "hours": "Daily 9:00-17:00 (extended in summer)",
+      "services": [
+        "Maps and brochures",
+        "Weather information",
+        "Trail conditions",
+        "Equipment rental",
+        "Guided tour booking"
+      ]
+    },
+    "best_time_to_visit": {
+      "peak_season": "July-August (warmest weather, most activities)",
+      "shoulder_season": "June and September (fewer crowds, good weather)",
+      "off_season": "October-May (winter activities, northern lights)"
+    },
+    "costs": {
+      "park_entry": "Free",
+      "parking": "Free",
+      "guided_tours": "From 500 SEK",
+      "equipment_rental": "From 200 SEK/day"
+    }
+  }
+}
