@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>National Park Guide PDF Generator</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Swedish National Park Guide</h1>
+      <p>Create personalized guides for your Swedish park adventures</p>
+    </div>
+
+    <!-- Trip Details Form -->
+    <div class="trip-form">
+      <h3>🌲 Trip Details</h3>
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="parkSelect">National Park *</label>
+          <select id="parkSelect" required>
+            <option value="">Choose a national park...</option>
+            <option value="abisko">Abisko National Park</option>
+            <option value="bjornlandet">Björnlandet National Park</option>
+            <option value="blajungfrun">Blå Jungfrun National Park</option>
+            <option value="dalby">Dalby Söderskog National Park</option>
+            <option value="farvidaberget">Färnebofjärden National Park</option>
+            <option value="fulufjallet">Fulufjället National Park</option>
+            <option value="garphyttan">Garphyttan National Park</option>
+            <option value="gotska">Gotska Sandön National Park</option>
+            <option value="hamra">Hamra National Park</option>
+            <option value="haparanda">Haparanda Skärgård National Park</option>
+            <option value="kosterhavet">Kosterhavet National Park</option>
+            <option value="muddus">Muddus National Park</option>
+            <option value="norra">Norra Kvill National Park</option>
+            <option value="padjelanta">Padjelanta National Park</option>
+            <option value="peljekaise">Pieljekaise National Park</option>
+            <option value="sarek">Sarek National Park</option>
+            <option value="soderasen">Söderåsen National Park</option>
+            <option value="stenshuvud">Stenshuvud National Park</option>
+            <option value="stora">Stora Sjöfallet National Park</option>
+            <option value="store">Store Mosse National Park</option>
+            <option value="tiveden">Tiveden National Park</option>
+            <option value="tresticklan">Tresticklan National Park</option>
+            <option value="tyresta">Tyresta National Park</option>
+            <option value="vadvetjåkka">Vadvetjåkka National Park</option>
+            <option value="angso">Ängsö National Park</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="season">Season *</label>
+          <select id="season" required>
+            <option value="">Choose season...</option>
+            <option value="spring">Spring (March-May)</option>
+            <option value="summer">Summer (June-August)</option>
+            <option value="autumn">Autumn (September-November)</option>
+            <option value="winter">Winter (December-February)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="duration">Trip Duration *</label>
+          <select id="duration" required>
+            <option value="">Choose duration...</option>
+            <option value="daytrip">Day trip</option>
+            <option value="couple">Couple of days (2-3 days)</option>
+            <option value="oneweek">One week</option>
+            <option value="twoweeks">Two weeks</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="accommodation">Accommodation *</label>
+          <select id="accommodation" required>
+            <option value="">Choose accommodation...</option>
+            <option value="tent">Tent camping</option>
+            <option value="cabin">Cabin/hut</option>
+            <option value="both">Both tent and cabin</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="originCity">Departure City *</label>
+          <input type="text" id="originCity" placeholder="e.g., Stockholm, Göteborg, Malmö" required>
+        </div>
+
+        <div class="form-group">
+          <label for="transport">Transportation *</label>
+          <select id="transport" required>
+            <option value="">Choose transportation...</option>
+            <option value="car">Car</option>
+            <option value="train">Train</option>
+            <option value="bus">Bus</option>
+            <option value="train-bus">Train + Bus</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="entrance">Park Entrance *</label>
+          <select id="entrance" required>
+            <option value="">Choose a national park first...</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn form-btn" onclick="generatePDF()">
+        Generate PDF
+      </button>
+    </div>
+
+    <div class="selected-sections">
+      <h3>Guide Sections</h3>
+      <div class="section-tags" id="selectedSections">
+        <div class="empty-state">Complete the form above to generate your guide</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF Preview Modal -->
+  <div id="pdfModal" class="pdf-modal">
+    <div class="pdf-content">
+      <h2>Your National Park Guide</h2>
+      <div id="pdfPreview">
+        <p style="text-align: center; color: #4a5568; margin: 20px 0;">
+          Your PDF guide has been generated and opened in a new tab for preview.
+          <br>You can now download it from there or use the download button below.
+        </p>
+      </div>
+      <div class="pdf-actions">
+        <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+        <button class="close-btn" onclick="closePDFModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Park entrance data
+    const parkEntrances = {
+      abisko: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'abisko-turiststation', text: 'Abisko Turiststation' },
+        { value: 'abisko-oj', text: 'Abisko Östra' },
+        { value: 'boat-ajtte', text: 'Boat from Ajtte Museum' }
+      ],
+      skarpholmen: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'boat', text: 'Boat access' }
+      ],
+      angso: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance (Ängsö Castle)' },
+        { value: 'boat', text: 'Boat from Stockholm' }
+      ],
+      bjornlandet: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' }
+      ],
+      blajungfrun: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'boat-kalmar', text: 'Boat from Kalmar' },
+        { value: 'boat-osm', text: 'Boat from Oskarshamn' }
+      ],
+      dalby: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'south', text: 'South entrance' }
+      ],
+      farvidaberget: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'south', text: 'South entrance' }
+      ],
+      fulufjallet: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'norrflaket', text: 'Norrflaket entrance' },
+        { value: 'south', text: 'South entrance' },
+        { value: 'west', text: 'West entrance' }
+      ],
+      garphyttan: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' }
+      ],
+      gotska: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'boat-nynashamn', text: 'Boat from Nynäshamn' },
+        { value: 'boat-visby', text: 'Boat from Visby' }
+      ],
+      hamra: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' }
+      ],
+      haparanda: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'boat', text: 'Boat access' }
+      ],
+      kosterhavet: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'koster-south', text: 'South Koster Island' },
+        { value: 'koster-north', text: 'North Koster Island' },
+        { value: 'boat-strömstad', text: 'Boat from Strömstad' }
+      ],
+      muddus: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'south', text: 'South entrance' }
+      ],
+      norra: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' }
+      ],
+      padjelanta: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'west', text: 'West entrance' }
+      ],
+      peljekaise: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' }
+      ],
+      sarek: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'aktse', text: 'Aktse entrance' },
+        { value: 'kvikkjokk', text: 'Kvikkjokk entrance' },
+        { value: 'saltoluokta', text: 'Saltoluokta entrance' },
+        { value: 'rietavare', text: 'Rietavare entrance' }
+      ],
+      soderasen: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'south', text: 'South entrance' }
+      ],
+      stenshuvud: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'south', text: 'South entrance' }
+      ],
+      stora: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'boat', text: 'Boat access' }
+      ],
+      store: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'south', text: 'South entrance' }
+      ],
+      tyresta: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'south', text: 'South entrance' }
+      ],
+      tiveden: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'south', text: 'South entrance' }
+      ],
+      tresticklan: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' },
+        { value: 'south', text: 'South entrance' }
+      ],
+      vadvetjåkka: [
+        { value: 'suggest', text: 'Suggest one for me' },
+        { value: 'main', text: 'Main entrance' },
+        { value: 'north', text: 'North entrance' }
+      ]
+    };
+
+    // Update entrance options when park is selected
+    function updateEntranceOptions() {
+      console.log('updateEntranceOptions called');
+      const parkSelect = document.getElementById('parkSelect');
+      const entranceSelect = document.getElementById('entrance');
+      const selectedPark = parkSelect.value;
+      
+      console.log('Selected park:', selectedPark);
+      
+      entranceSelect.innerHTML = '<option value="">Choose entrance...</option>';
+      
+      if (selectedPark && parkEntrances[selectedPark]) {
+        console.log('Found entrances:', parkEntrances[selectedPark]);
+        parkEntrances[selectedPark].forEach(entrance => {
+          const option = document.createElement('option');
+          option.value = entrance.value;
+          option.textContent = entrance.text;
+          entranceSelect.appendChild(option);
+        });
+      } else {
+        console.log('No entrances found for park:', selectedPark);
+        // Add a generic entrance option for parks without specific entrances
+        const option = document.createElement('option');
+        option.value = 'main';
+        option.textContent = 'Main entrance';
+        entranceSelect.appendChild(option);
+      }
+    }
+
+    let generatedPDF = null;
+
+    function generatePDF() {
+      console.log('Generate PDF function called');
+      
+      // Get form data
+      const parkSelect = document.getElementById('parkSelect');
+      const season = document.getElementById('season');
+      const duration = document.getElementById('duration');
+      const accommodation = document.getElementById('accommodation');
+      const originCity = document.getElementById('originCity');
+      const transport = document.getElementById('transport');
+      const entrance = document.getElementById('entrance');
+
+      // Validate form
+      if (!parkSelect.value || !season.value || !duration.value || !accommodation.value || !originCity.value || !transport.value || !entrance.value) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      // Get selected values
+      const parkName = parkSelect.options[parkSelect.selectedIndex].text;
+      const seasonText = season.options[season.selectedIndex].text;
+      const durationText = duration.options[duration.selectedIndex].text;
+      const accommodationText = accommodation.options[accommodation.selectedIndex].text;
+      const transportText = transport.options[transport.selectedIndex].text;
+      const entranceText = entrance.options[entrance.selectedIndex].text;
+
+      try {
+        // Create PDF using jsPDF
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Set document properties
+        doc.setProperties({
+          title: `${parkName} - National Park Guide`,
+          subject: 'Personalized National Park Visit Guide',
+          author: 'Swedish National Park Guide',
+          creator: 'National Park Guide Generator'
+        });
+
+        // Add title
+        doc.setFontSize(24);
+        doc.setTextColor(44, 62, 80);
+        doc.text(`${parkName}`, 105, 30, { align: 'center' });
+        
+        doc.setFontSize(18);
+        doc.setTextColor(52, 73, 94);
+        doc.text('Personalized Visit Guide', 105, 45, { align: 'center' });
+
+        // Add trip details table
+        doc.setFontSize(12);
+        doc.setTextColor(44, 62, 80);
+        
+        const tripDetails = [
+          ['Trip Details', ''],
+          ['National Park', parkName],
+          ['Season', seasonText],
+          ['Duration', durationText],
+          ['Accommodation', accommodationText],
+          ['Departure City', originCity.value],
+          ['Transportation', transportText],
+          ['Park Entrance', entranceText]
+        ];
+
+        doc.autoTable({
+          startY: 60,
+          head: [['Field', 'Value']],
+          body: tripDetails.slice(1),
+          theme: 'grid',
+          headStyles: {
+            fillColor: [102, 126, 234],
+            textColor: 255,
+            fontSize: 12,
+            fontStyle: 'bold'
+          },
+          bodyStyles: {
+            fontSize: 11,
+            textColor: [44, 62, 80]
+          },
+          alternateRowStyles: {
+            fillColor: [248, 249, 250]
+          }
+        });
+
+        // Add guide sections
+        const guideSections = [
+          '📋 Park Information and Overview',
+          '🌤️ Weather and Seasonal Considerations',
+          '🥾 Recommended Hiking Trails',
+          '🏕️ Accommodation Options',
+          '🚗 Transportation Guide',
+          '🎒 Packing Checklist',
+          '⚠️ Safety Information',
+          '🦊 Local Wildlife and Flora',
+          '📸 Photography Tips',
+          '📞 Emergency Contacts'
+        ];
+
+        let currentY = doc.lastAutoTable.finalY + 20;
+        
+        doc.setFontSize(16);
+        doc.setTextColor(52, 73, 94);
+        doc.text('Guide Sections', 20, currentY);
+        currentY += 15;
+
+        doc.setFontSize(11);
+        doc.setTextColor(44, 62, 80);
+        
+        guideSections.forEach((section, index) => {
+          if (currentY > 250) {
+            doc.addPage();
+            currentY = 20;
+          }
+          doc.text(section, 25, currentY);
+          currentY += 12;
+        });
+
+        // Add seasonal tips
+        currentY += 10;
+        doc.setFontSize(14);
+        doc.setTextColor(52, 73, 94);
+        doc.text('Seasonal Tips', 20, currentY);
+        currentY += 15;
+
+        doc.setFontSize(10);
+        doc.setTextColor(44, 62, 80);
+        
+        const seasonalTips = getSeasonalTips(season.value, parkName);
+        seasonalTips.forEach(tip => {
+          if (currentY > 250) {
+            doc.addPage();
+            currentY = 20;
+          }
+          doc.text(`• ${tip}`, 25, currentY);
+          currentY += 10;
+        });
+
+        // Store the generated PDF
+        generatedPDF = doc;
+        
+        // Show preview modal
+        showPDFPreview(parkName, seasonText, durationText, accommodationText, originCity.value, transportText, entranceText);
+        
+      } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('Error generating PDF. Please try again.');
+      }
+    }
+
+    function getSeasonalTips(season, parkName) {
+      const tips = {
+        spring: [
+          'Spring is perfect for bird watching and seeing wildflowers bloom',
+          'Trails may be muddy - bring waterproof footwear',
+          'Temperatures can vary greatly - pack layers',
+          'Check for any seasonal trail closures'
+        ],
+        summer: [
+          'Peak season - book accommodations well in advance',
+          'Bring plenty of water and sun protection',
+          'Best time for swimming in lakes and rivers',
+          'Expect more visitors and busier trails'
+        ],
+        autumn: [
+          'Beautiful fall colors make for excellent photography',
+          'Cooler temperatures perfect for longer hikes',
+          'Fewer crowds and more peaceful experience',
+          'Some facilities may close for the season'
+        ],
+        winter: [
+          'Check weather conditions and trail accessibility',
+          'Bring warm clothing and proper winter gear',
+          'Some trails may require snowshoes or skis',
+          'Limited facilities and shorter daylight hours'
+        ]
+      };
+      
+      return tips[season] || tips.spring;
+    }
+
+    function showPDFPreview(parkName, season, duration, accommodation, originCity, transport, entrance) {
+      const modal = document.getElementById('pdfModal');
+      
+      // Generate PDF blob and open in new tab
+      if (generatedPDF) {
+        const pdfBlob = generatedPDF.output('blob');
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        
+        // Open PDF in new tab - browser will use its native PDF viewer
+        window.open(pdfUrl, '_blank');
+        
+        // Clean up the URL after a delay to allow the browser to load it
+        setTimeout(() => {
+          URL.revokeObjectURL(pdfUrl);
+        }, 1000);
+      }
+      
+      modal.classList.add('show');
+    }
+
+    function downloadPDF() {
+      if (generatedPDF) {
+        const parkName = document.getElementById('parkSelect').options[document.getElementById('parkSelect').selectedIndex].text;
+        const filename = `${parkName.replace(/\s+/g, '_')}_Guide_${new Date().toISOString().split('T')[0]}.pdf`;
+        generatedPDF.save(filename);
+      }
+    }
+
+    function closePDFModal() {
+      const modal = document.getElementById('pdfModal');
+      modal.classList.remove('show');
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded');
+      const parkSelect = document.getElementById('parkSelect');
+      if (parkSelect) {
+        parkSelect.addEventListener('change', updateEntranceOptions);
+        console.log('Event listener added');
+      } else {
+        console.log('parkSelect not found');
+      }
+
+      // Close modal when clicking outside
+      const modal = document.getElementById('pdfModal');
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          closePDFModal();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
