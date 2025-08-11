@@ -121,22 +121,7 @@
     </div>
   </div>
 
-  <!-- PDF Preview Modal -->
-  <div id="pdfModal" class="pdf-modal">
-    <div class="pdf-content">
-      <h2>Your National Park Guide</h2>
-      <div id="pdfPreview">
-        <p style="text-align: center; color: #4a5568; margin: 20px 0;">
-          Your PDF guide has been generated and opened in a new tab for preview.
-          <br>You can now download it from there or use the download button below.
-        </p>
-      </div>
-      <div class="pdf-actions">
-        <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
-        <button class="close-btn" onclick="closePDFModal()">Close</button>
-      </div>
-    </div>
-  </div>
+
 
   <script>
     // Park entrance data
@@ -319,10 +304,8 @@
 
     let generatedPDF = null;
 
-    function generatePDF() {
-      console.log('Generate PDF function called');
-      
-      // Get form data
+    // Helper function to get and validate form data
+    function getFormData() {
       const parkSelect = document.getElementById('parkSelect');
       const season = document.getElementById('season');
       const duration = document.getElementById('duration');
@@ -334,16 +317,32 @@
       // Validate form
       if (!parkSelect.value || !season.value || !duration.value || !accommodation.value || !originCity.value || !transport.value || !entrance.value) {
         alert('Please fill in all required fields.');
-        return;
+        return null;
       }
 
+      // Return formatted data
+      return {
+        parkName: parkSelect.options[parkSelect.selectedIndex].text,
+        seasonText: season.options[season.selectedIndex].text,
+        durationText: duration.options[duration.selectedIndex].text,
+        accommodationText: accommodation.options[accommodation.selectedIndex].text,
+        transportText: transport.options[transport.selectedIndex].text,
+        entranceText: entrance.options[entrance.selectedIndex].text,
+        originCity: originCity.value,
+        seasonValue: season.value,
+        parkId: parkSelect.value
+      };
+    }
+
+    function generatePDF() {
+      console.log('Generate PDF function called');
+      
+      // Get and validate form data
+      const formData = getFormData();
+      if (!formData) return;
+
       // Get selected values
-      const parkName = parkSelect.options[parkSelect.selectedIndex].text;
-      const seasonText = season.options[season.selectedIndex].text;
-      const durationText = duration.options[duration.selectedIndex].text;
-      const accommodationText = accommodation.options[accommodation.selectedIndex].text;
-      const transportText = transport.options[transport.selectedIndex].text;
-      const entranceText = entrance.options[entrance.selectedIndex].text;
+      const { parkName, seasonText, durationText, accommodationText, transportText, entranceText } = formData;
 
       try {
         // Create PDF using jsPDF
@@ -362,10 +361,6 @@
         doc.setFontSize(24);
         doc.setTextColor(44, 62, 80);
         doc.text(`${parkName}`, 105, 30, { align: 'center' });
-        
-        doc.setFontSize(18);
-        doc.setTextColor(52, 73, 94);
-        doc.text('Personalized Visit Guide', 105, 45, { align: 'center' });
 
         // Add trip details table
         doc.setFontSize(12);
@@ -402,9 +397,60 @@
           }
         });
 
+        // Add park information and overview
+        currentY = doc.lastAutoTable.finalY + 20;
+        
+        doc.setFontSize(16);
+        doc.setTextColor(52, 73, 94);
+        doc.text('Park Information & Overview', 20, currentY);
+        currentY += 15;
+        
+        doc.setFontSize(11);
+        doc.setTextColor(44, 62, 80);
+        
+        // Get park data for overview
+        const parkData = parksDataManager.getPark(formData.parkId);
+        if (parkData && parkData.overview) {
+          // Add park description
+          const description = parkData.overview.description;
+          const lines = doc.splitTextToSize(description, 160); // Wrap text to fit page width
+          
+          lines.forEach(line => {
+            if (currentY > 250) {
+              doc.addPage();
+              currentY = 20;
+            }
+            doc.text(line, 25, currentY);
+            currentY += 8;
+          });
+          
+          currentY += 10;
+          
+          // Add key highlights
+          if (parkData.overview.highlights) {
+            doc.setFontSize(12);
+            doc.setTextColor(52, 73, 94);
+            doc.text('Key Highlights:', 25, currentY);
+            currentY += 10;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(44, 62, 80);
+            
+            parkData.overview.highlights.forEach(highlight => {
+              if (currentY > 250) {
+                doc.addPage();
+                currentY = 20;
+              }
+              doc.text(`• ${highlight}`, 30, currentY);
+              currentY += 8;
+            });
+          }
+          
+          currentY += 15;
+        }
+
         // Add guide sections
         const guideSections = [
-          'Park Information and Overview',
           'Weather and Seasonal Considerations',
           'Recommended Hiking Trails',
           'Accommodation Options',
@@ -415,8 +461,6 @@
           'Photography Tips',
           'Emergency Contacts'
         ];
-
-        let currentY = doc.lastAutoTable.finalY + 20;
         
         doc.setFontSize(16);
         doc.setTextColor(52, 73, 94);
@@ -445,8 +489,7 @@
         doc.setFontSize(10);
         doc.setTextColor(44, 62, 80);
         
-        const seasonalTips = getSeasonalTips(season.value, parkSelect.value);
-        console.log(seasonalTips);
+        const seasonalTips = getSeasonalTips(formData.seasonValue, formData.parkId);
         seasonalTips.forEach(tip => {
           if (currentY > 250) {
             doc.addPage();
@@ -459,8 +502,17 @@
         // Store the generated PDF
         generatedPDF = doc;
         
-        // Show preview modal
-        showPDFPreview(parkName, seasonText, durationText, accommodationText, originCity.value, transportText, entranceText);
+        // Open PDF directly in new tab
+        const pdfBlob = generatedPDF.output('blob');
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        
+        // Open PDF in new tab - browser will use its native PDF viewer
+        window.open(pdfUrl, '_blank');
+        
+        // Clean up the URL after a delay to allow the browser to load it
+        setTimeout(() => {
+          URL.revokeObjectURL(pdfUrl);
+        }, 1000);
         
       } catch (error) {
         console.error('Error generating PDF:', error);
@@ -506,38 +558,7 @@
       return genericTips[season] || genericTips.spring;
     }
 
-    function showPDFPreview(parkName, season, duration, accommodation, originCity, transport, entrance) {
-      const modal = document.getElementById('pdfModal');
-      
-      // Generate PDF blob and open in new tab
-      if (generatedPDF) {
-        const pdfBlob = generatedPDF.output('blob');
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        
-        // Open PDF in new tab - browser will use its native PDF viewer
-        window.open(pdfUrl, '_blank');
-        
-        // Clean up the URL after a delay to allow the browser to load it
-        setTimeout(() => {
-          URL.revokeObjectURL(pdfUrl);
-        }, 1000);
-      }
-      
-      modal.classList.add('show');
-    }
 
-    function downloadPDF() {
-      if (generatedPDF) {
-        const parkName = document.getElementById('parkSelect').options[document.getElementById('parkSelect').selectedIndex].text;
-        const filename = `${parkName.replace(/\s+/g, '_')}_Guide_${new Date().toISOString().split('T')[0]}.pdf`;
-        generatedPDF.save(filename);
-      }
-    }
-
-    function closePDFModal() {
-      const modal = document.getElementById('pdfModal');
-      modal.classList.remove('show');
-    }
 
     // Initialize when page loads
     document.addEventListener('DOMContentLoaded', function() {
@@ -554,13 +575,7 @@
         console.log('parkSelect not found');
       }
 
-      // Close modal when clicking outside
-      const modal = document.getElementById('pdfModal');
-      modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-          closePDFModal();
-        }
-      });
+
     });
   </script>
 </body>

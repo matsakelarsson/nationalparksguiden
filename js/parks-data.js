@@ -8,54 +8,45 @@ class ParksDataManager {
   // Load all park data
   async loadParksData() {
     try {
-      // Abisko National Park data
-      this.parks.abisko = {
-        "id": "abisko",
-        "name": "Abisko National Park",
-        "name_sv": "Abisko Nationalpark",
-        "seasons": {
-          "spring": {
-            "packing_tips": [
-              "Waterproof boots for melting snow",
-              "Layered clothing for variable temperatures",
-              "Sunglasses for bright snow",
-              "Trekking poles for stability"
-            ]
-          },
-          "summer": {
-            "packing_tips": [
-              "Lightweight hiking gear",
-              "Sun protection (24-hour sun)",
-              "Swimming gear",
-              "Insect repellent",
-              "Water bottles"
-            ]
-          },
-          "autumn": {
-            "packing_tips": [
-              "Warm layers for cooler temperatures",
-              "Rain gear",
-              "Camera for fall colors",
-              "Headlamp for shorter days"
-            ]
-          },
-          "winter": {
-            "packing_tips": [
-              "Extremely warm clothing",
-              "Snow boots",
-              "Headlamp",
-              "Camera for northern lights",
-              "Thermal underwear"
-            ]
-          }
-        }
-      };
+      // Load Abisko data from the JSON file
+      const response = await fetch('./data/parks/abisko.json');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const abiskoData = await response.json();
+      this.parks.abisko = abiskoData;
       
       this.loaded = true;
-      console.log('Parks data loaded successfully');
+      console.log('Parks data loaded successfully from JSON file');
     } catch (error) {
       console.error('Error loading parks data:', error);
+      // Fallback: load minimal data if fetch fails
+      this.loadFallbackData();
     }
+  }
+
+  // Fallback data if JSON loading fails
+  loadFallbackData() {
+    this.parks.abisko = {
+      "id": "abisko",
+      "name": "Abisko National Park",
+      "overview": {
+        "description": "Abisko National Park is located in the northernmost part of Sweden, above the Arctic Circle. It's famous for its dramatic mountain landscapes, pristine wilderness, and the iconic Kungsleden trail.",
+        "highlights": [
+          "Iconic Kungsleden trail starting point",
+          "Stunning views of Lake Torneträsk",
+          "Arctic wilderness experience"
+        ]
+      },
+      "seasons": {
+        "spring": { "packing_tips": ["Waterproof boots", "Layered clothing"] },
+        "summer": { "packing_tips": ["Lightweight gear", "Sun protection"] },
+        "autumn": { "packing_tips": ["Warm layers", "Rain gear"] },
+        "winter": { "packing_tips": ["Warm clothing", "Snow boots"] }
+      }
+    };
+    this.loaded = true;
+    console.log('Fallback data loaded');
   }
 
   // Get park data by ID
