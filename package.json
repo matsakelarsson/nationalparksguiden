@@ -1,0 +1,15 @@
+{
+  "name": "nationalparksguiden",
+  "version": "1.0.0",
+  "description": "Swedish National Park Guide PDF Generator",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static site - no build required'",
+    "start": "echo 'Static site - open index.html in browser'"
+  },
+  "keywords": ["national-park", "sweden", "pdf-generator", "static-site"],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}
