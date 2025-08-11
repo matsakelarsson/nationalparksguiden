@@ -8,13 +8,48 @@ class ParksDataManager {
   // Load all park data
   async loadParksData() {
     try {
-      // Load Abisko data
-      const abiskoResponse = await fetch('data/parks/abisko.json');
-      if (abiskoResponse.ok) {
-        this.parks.abisko = await abiskoResponse.json();
-      } else {
-        console.error('Failed to load Abisko data');
-      }
+      // Abisko National Park data
+      this.parks.abisko = {
+        "id": "abisko",
+        "name": "Abisko National Park",
+        "name_sv": "Abisko Nationalpark",
+        "seasons": {
+          "spring": {
+            "packing_tips": [
+              "Waterproof boots for melting snow",
+              "Layered clothing for variable temperatures",
+              "Sunglasses for bright snow",
+              "Trekking poles for stability"
+            ]
+          },
+          "summer": {
+            "packing_tips": [
+              "Lightweight hiking gear",
+              "Sun protection (24-hour sun)",
+              "Swimming gear",
+              "Insect repellent",
+              "Water bottles"
+            ]
+          },
+          "autumn": {
+            "packing_tips": [
+              "Warm layers for cooler temperatures",
+              "Rain gear",
+              "Camera for fall colors",
+              "Headlamp for shorter days"
+            ]
+          },
+          "winter": {
+            "packing_tips": [
+              "Extremely warm clothing",
+              "Snow boots",
+              "Headlamp",
+              "Camera for northern lights",
+              "Thermal underwear"
+            ]
+          }
+        }
+      };
       
       this.loaded = true;
       console.log('Parks data loaded successfully');

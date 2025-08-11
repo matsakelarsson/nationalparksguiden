@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+  <script src="js/parks-data.js"></script>
 </head>
 <body>
   <div class="container">
@@ -403,16 +404,16 @@
 
         // Add guide sections
         const guideSections = [
-          '📋 Park Information and Overview',
-          '🌤️ Weather and Seasonal Considerations',
-          '🥾 Recommended Hiking Trails',
-          '🏕️ Accommodation Options',
-          '🚗 Transportation Guide',
-          '🎒 Packing Checklist',
-          '⚠️ Safety Information',
-          '🦊 Local Wildlife and Flora',
-          '📸 Photography Tips',
-          '📞 Emergency Contacts'
+          'Park Information and Overview',
+          'Weather and Seasonal Considerations',
+          'Recommended Hiking Trails',
+          'Accommodation Options',
+          'Transportation Guide',
+          'Packing Checklist',
+          'Safety Information',
+          'Local Wildlife and Flora',
+          'Photography Tips',
+          'Emergency Contacts'
         ];
 
         let currentY = doc.lastAutoTable.finalY + 20;
@@ -444,7 +445,8 @@
         doc.setFontSize(10);
         doc.setTextColor(44, 62, 80);
         
-        const seasonalTips = getSeasonalTips(season.value, parkName);
+        const seasonalTips = getSeasonalTips(season.value, parkSelect.value);
+        console.log(seasonalTips);
         seasonalTips.forEach(tip => {
           if (currentY > 250) {
             doc.addPage();
@@ -466,8 +468,15 @@
       }
     }
 
-    function getSeasonalTips(season, parkName) {
-      const tips = {
+    function getSeasonalTips(season, parkId) {
+      // Use the proper method from ParksDataManager
+      const seasonalInfo = parksDataManager.getSeasonalInfo(parkId, season);
+      if (seasonalInfo && seasonalInfo.packing_tips) {
+        return seasonalInfo.packing_tips;
+      }
+      
+      // Fallback to generic tips if no park data
+      const genericTips = {
         spring: [
           'Spring is perfect for bird watching and seeing wildflowers bloom',
           'Trails may be muddy - bring waterproof footwear',
@@ -494,7 +503,7 @@
         ]
       };
       
-      return tips[season] || tips.spring;
+      return genericTips[season] || genericTips.spring;
     }
 
     function showPDFPreview(parkName, season, duration, accommodation, originCity, transport, entrance) {
@@ -533,6 +542,10 @@
     // Initialize when page loads
     document.addEventListener('DOMContentLoaded', function() {
       console.log('DOM loaded');
+      
+      // Load parks data
+      parksDataManager.loadParksData();
+      
       const parkSelect = document.getElementById('parkSelect');
       if (parkSelect) {
         parkSelect.addEventListener('change', updateEntranceOptions);
